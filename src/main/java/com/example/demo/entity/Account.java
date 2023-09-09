@@ -18,7 +18,7 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")
-    private Long accountId;
+    private Long id;
     @Column(name = "account_type")
     private String accountType;
     @Column(name = "account_balance")
@@ -27,7 +27,7 @@ public class Account {
     private LocalDate creationDate;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id",nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     @JsonIgnore
-    Customer customer;
+    private Customer customer;
 }

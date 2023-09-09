@@ -18,7 +18,7 @@ public class Transaction {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "transaction_id")
-   private Long transactionId;
+   private Long id;
    @Column(name = "transfer_amount")
    private BigDecimal transferAmount;
    @Column(name = "transaction_type")
