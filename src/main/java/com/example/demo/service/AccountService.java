@@ -7,6 +7,8 @@ import com.example.demo.request.AccountCreateRequest;
 import com.example.demo.request.AccountUpdateRequest;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -58,4 +60,24 @@ public class AccountService {
     public List<Account> getAllAccountsByCustomerId(Long customerId) {
         return accountRepository.findByCustomerId(customerId);
     }
+
+    @Transactional
+    public void withdraw(Long accountId, BigDecimal transferAmount) {
+        Account account = getOneAccount(accountId);
+        BigDecimal currentBalance = account.getAccountBalance();
+        BigDecimal newBalance = currentBalance.subtract(transferAmount);
+        account.setAccountBalance(newBalance);
+        accountRepository.save(account);
+    }
+    @Transactional
+    public void deposit(Long accountId, BigDecimal transferAmount){
+        Account account = getOneAccount(accountId);
+        BigDecimal currentBalance = account.getAccountBalance();
+
+        BigDecimal newBalance = currentBalance.add(transferAmount);
+        account.setAccountBalance(newBalance);
+        accountRepository.save(account);
+    }
+
+
 }

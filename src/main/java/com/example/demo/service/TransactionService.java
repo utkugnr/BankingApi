@@ -1,31 +1,43 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Account;
 import com.example.demo.entity.Transaction;
 import com.example.demo.repository.TransactionRepository;
 import com.example.demo.request.TransactionCreateRequest;
 import com.example.demo.request.TransactionUpdateRequest;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class TransactionService {
 
     private TransactionRepository transactionRepository;
-    public TransactionService(TransactionRepository transactionRepository) {
+    private AccountService accountService;
+    public TransactionService(TransactionRepository transactionRepository, AccountService accountService) {
         this.transactionRepository = transactionRepository;
+        this.accountService=accountService;
     }
+    @Transactional
     public Transaction create(TransactionCreateRequest newTransactionRequest) {
-        if(Objects.isNull(newTransactionRequest))
+        Account senderAccount = accountService.getOneAccount(newTransactionRequest.getSenderAccountId());
+        Account receiverAccount = accountService.getOneAccount(newTransactionRequest.getReceiverAccountId());
+        if(senderAccount ==null && receiverAccount==null)
             return null;
         else{
             Transaction toSave = new Transaction();
             toSave.setTransferAmount(newTransactionRequest.getTransferAmount());
             toSave.setTransactionType(newTransactionRequest.getTransactionType());
             toSave.setTransactionTime(newTransactionRequest.getTransactionTime());
-            return transactionRepository.save(toSave);
+            toSave.setSenderAccount(senderAccount);
+            toSave.setReceiverAccount(receiverAccount);
+            toSave = transactionRepository.save(toSave);
+
+            accountService.withdraw(senderAccount.getId(),newTransactionRequest.getTransferAmount());
+            accountService.deposit(receiverAccount.getId(),newTransactionRequest.getTransferAmount());
+            return toSave;
         }
     }
     public List<Transaction> getAllTransactions(){

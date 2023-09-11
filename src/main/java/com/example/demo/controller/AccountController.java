@@ -6,6 +6,7 @@ import com.example.demo.request.AccountUpdateRequest;
 import com.example.demo.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -38,5 +39,13 @@ public class AccountController {
     @DeleteMapping("/{accountId}")
     public void deleteOneAccount(@PathVariable Long accountId){
         accountService.delete(accountId);
+    }
+    @PutMapping("/{accountId}/withdraw")
+    public void withdrawMoney(@PathVariable Long accountId, BigDecimal transferAmount){
+        accountService.withdraw(accountId,transferAmount);
+    }
+    @PutMapping("{accountId}/deposit")
+    public void depositMoney(@PathVariable Long accountId , BigDecimal transferAmount){
+        accountService.deposit(accountId,transferAmount);
     }
 }

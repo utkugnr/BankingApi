@@ -6,6 +6,7 @@ import com.example.demo.request.TransactionUpdateRequest;
 import com.example.demo.service.TransactionService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.InsufficientResourcesException;
 import java.util.List;
 
 @RestController
@@ -16,21 +17,21 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
     @PostMapping
-    public Transaction createOneTransaction(@RequestBody TransactionCreateRequest newTransactionRequest){
+    public Transaction createOneTransaction(@RequestBody TransactionCreateRequest newTransactionRequest) {
         return transactionService.create(newTransactionRequest);
     }
     @GetMapping
     public List<Transaction> getAllTransactions(){
         return transactionService.getAllTransactions();
     }
-    @GetMapping("/accounts/{accountId}")
+    @GetMapping("/sender/{accountId}")
     public List<Transaction> getAllTransactionsBySenderAccountId(@PathVariable Long accountId){
         return transactionService.getAllTransactionsBySenderAccountId(accountId);
     }
-   /* @GetMapping("/accounts/{accountId}")
+    @GetMapping("/receiver/{accountId}")
     public List<Transaction> getAllTransactionsByReceiverAccountId(@PathVariable Long accountId){
         return transactionService.getAllTransactionsByReceiverAccountId(accountId);
-    }*/
+    }
     @GetMapping("/{transactionId}")
     public Transaction getOneTransaction(@PathVariable Long transactionId){
         return transactionService.getOneTransaction(transactionId);
