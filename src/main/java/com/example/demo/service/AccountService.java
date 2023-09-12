@@ -5,13 +5,17 @@ import com.example.demo.entity.Customer;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.request.AccountCreateRequest;
 import com.example.demo.request.AccountUpdateRequest;
+import com.example.demo.response.AccountResponse;
+import com.example.demo.response.TransactionResponse;
 import org.springframework.stereotype.Service;
 
+import javax.naming.InsufficientResourcesException;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
@@ -34,8 +38,10 @@ public class AccountService {
             return accountRepository.save(toSave);
         }
     }
-    public List<Account> getAllAccounts(){
-        return accountRepository.findAll();
+    public List<AccountResponse> getAllAccounts(){
+        List<Account> list;
+        list = accountRepository.findAll();
+        return list.stream().map(account -> new AccountResponse(account)).collect(Collectors.toList());
     }
     public Account getOneAccount(Long accountId) {
         return accountRepository.findById(accountId).orElse(null);
@@ -57,14 +63,18 @@ public class AccountService {
         accountRepository.deleteById(accountId);
     }
 
-    public List<Account> getAllAccountsByCustomerId(Long customerId) {
-        return accountRepository.findByCustomerId(customerId);
+    public List<AccountResponse> getAllAccountsByCustomerId(Long customerId) {
+        List<Account> list;
+        list = accountRepository.findByCustomerId(customerId);
+        return list.stream().map(account -> new AccountResponse(account)).collect(Collectors.toList());
     }
 
     @Transactional
-    public void withdraw(Long accountId, BigDecimal transferAmount) {
+    public void withdraw(Long accountId, BigDecimal transferAmount) throws InsufficientResourcesException {
         Account account = getOneAccount(accountId);
         BigDecimal currentBalance = account.getAccountBalance();
+        if (currentBalance.compareTo(transferAmount)<0)
+            throw new InsufficientResourcesException("Insufficient balance");
         BigDecimal newBalance = currentBalance.subtract(transferAmount);
         account.setAccountBalance(newBalance);
         accountRepository.save(account);

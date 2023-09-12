@@ -5,11 +5,14 @@ import com.example.demo.entity.Transaction;
 import com.example.demo.repository.TransactionRepository;
 import com.example.demo.request.TransactionCreateRequest;
 import com.example.demo.request.TransactionUpdateRequest;
+import com.example.demo.response.TransactionResponse;
 import org.springframework.stereotype.Service;
 
+import javax.naming.InsufficientResourcesException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
@@ -21,11 +24,11 @@ public class TransactionService {
         this.accountService=accountService;
     }
     @Transactional
-    public Transaction create(TransactionCreateRequest newTransactionRequest) {
+    public Transaction create(TransactionCreateRequest newTransactionRequest) throws InsufficientResourcesException {
         Account senderAccount = accountService.getOneAccount(newTransactionRequest.getSenderAccountId());
         Account receiverAccount = accountService.getOneAccount(newTransactionRequest.getReceiverAccountId());
-        if(senderAccount ==null && receiverAccount==null)
-            return null;
+        if(senderAccount.getAccountBalance().compareTo(newTransactionRequest.getTransferAmount())<0)
+            throw new InsufficientResourcesException("Insufficient balance");
         else{
             Transaction toSave = new Transaction();
             toSave.setTransferAmount(newTransactionRequest.getTransferAmount());
@@ -40,11 +43,15 @@ public class TransactionService {
             return toSave;
         }
     }
-    public List<Transaction> getAllTransactions(){
-        return transactionRepository.findAll();
+    public List<TransactionResponse> getAllTransactions(){
+        List<Transaction> list;
+        list = transactionRepository.findAll();
+       return list.stream().map(transaction -> new TransactionResponse(transaction)).collect(Collectors.toList());
     }
-    public Transaction getOneTransaction(Long transactionId) {
-        return transactionRepository.getById(transactionId);
+    public List<TransactionResponse> getOneTransaction(Long transactionId) {
+        Optional<Transaction> list;
+        list = transactionRepository.findById(transactionId);
+        return list.stream().map(transaction -> new TransactionResponse(transaction)).collect(Collectors.toList());
     }
     public Transaction update(Long transactionId, TransactionUpdateRequest updateTransaction) {
         Optional<Transaction> transaction = transactionRepository.findById(transactionId);
@@ -63,10 +70,14 @@ public class TransactionService {
         transactionRepository.deleteById(transactionId);
     }
 
-    public List<Transaction> getAllTransactionsBySenderAccountId(Long accountId) {
-        return transactionRepository.findBySenderAccountId(accountId);
+    public List<TransactionResponse> getAllTransactionsBySenderAccountId(Long accountId) {
+        List<Transaction> list;
+        list = transactionRepository.findBySenderAccountId(accountId);
+        return list.stream().map(transaction -> new TransactionResponse(transaction)).collect(Collectors.toList());
     }
-    public List<Transaction> getAllTransactionsByReceiverAccountId(Long accountId) {
-        return transactionRepository.findByReceiverAccountId(accountId);
+    public List<TransactionResponse> getAllTransactionsByReceiverAccountId(Long accountId) {
+        List<Transaction> list;
+        list = transactionRepository.findByReceiverAccountId(accountId);
+        return list.stream().map(transaction -> new TransactionResponse(transaction)).collect(Collectors.toList());
     }
 }
