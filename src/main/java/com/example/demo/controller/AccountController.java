@@ -43,11 +43,11 @@ public class AccountController {
         accountService.delete(accountId);
     }
     @PutMapping("/{accountId}/withdraw")
-    public void withdrawMoney(@PathVariable Long accountId, BigDecimal transferAmount) throws InsufficientResourcesException {
+    public void withdrawMoney(@PathVariable Long accountId, @RequestParam BigDecimal transferAmount) throws InsufficientResourcesException {
         accountService.withdraw(accountId,transferAmount);
     }
     @PutMapping("{accountId}/deposit")
-    public void depositMoney(@PathVariable Long accountId , BigDecimal transferAmount){
+    public void depositMoney(@PathVariable Long accountId , @RequestParam BigDecimal transferAmount){
         accountService.deposit(accountId,transferAmount);
     }
 }
