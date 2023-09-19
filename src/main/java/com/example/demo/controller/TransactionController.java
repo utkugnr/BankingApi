@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Transaction;
-import com.example.demo.request.TransactionCreateRequest;
-import com.example.demo.request.TransactionUpdateRequest;
-import com.example.demo.response.TransactionResponse;
+import com.example.demo.model.Transaction;
+import com.example.demo.dto.request.TransactionCreateRequest;
+import com.example.demo.dto.request.TransactionUpdateRequest;
+import com.example.demo.dto.response.TransactionResponse;
 import com.example.demo.service.TransactionService;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
-    private TransactionService transactionService;
+    private final TransactionService transactionService;
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
     }

@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Account;
-import com.example.demo.request.AccountCreateRequest;
-import com.example.demo.request.AccountUpdateRequest;
-import com.example.demo.response.AccountResponse;
+import com.example.demo.model.Account;
+import com.example.demo.dto.request.AccountCreateRequest;
+import com.example.demo.dto.request.AccountUpdateRequest;
+import com.example.demo.dto.response.AccountResponse;
 import com.example.demo.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
-    private AccountService accountService;
+    private final AccountService accountService;
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }

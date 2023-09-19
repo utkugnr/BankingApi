@@ -1,19 +1,17 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Account;
-import com.example.demo.entity.Customer;
+import com.example.demo.model.Account;
+import com.example.demo.model.Customer;
 import com.example.demo.repository.AccountRepository;
-import com.example.demo.request.AccountCreateRequest;
-import com.example.demo.request.AccountUpdateRequest;
-import com.example.demo.response.AccountResponse;
-import com.example.demo.response.TransactionResponse;
+import com.example.demo.dto.request.AccountCreateRequest;
+import com.example.demo.dto.request.AccountUpdateRequest;
+import com.example.demo.dto.response.AccountResponse;
 import org.springframework.stereotype.Service;
 
 import javax.naming.InsufficientResourcesException;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 

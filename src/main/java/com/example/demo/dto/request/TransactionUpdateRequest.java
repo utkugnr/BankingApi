@@ -1,6 +1,5 @@
-package com.example.demo.request;
+package com.example.demo.dto.request;
 
-import com.example.demo.entity.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,10 +10,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionCreateRequest {
+public class TransactionUpdateRequest {
     BigDecimal transferAmount;
     String transactionType;
     LocalDateTime transactionTime;
-    Long senderAccountId;
-    Long receiverAccountId;
 }

@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Customer;
+import com.example.demo.model.Customer;
 import com.example.demo.repository.CustomerRepository;
-import com.example.demo.request.CustomerCreateRequest;
-import com.example.demo.request.CustomerUpdateRequest;
+import com.example.demo.dto.request.CustomerCreateRequest;
+import com.example.demo.dto.request.CustomerUpdateRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

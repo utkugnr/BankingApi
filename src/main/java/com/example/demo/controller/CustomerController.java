@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Customer;
-import com.example.demo.request.CustomerCreateRequest;
-import com.example.demo.request.CustomerUpdateRequest;
+import com.example.demo.model.Customer;
+import com.example.demo.dto.request.CustomerCreateRequest;
+import com.example.demo.dto.request.CustomerUpdateRequest;
 import com.example.demo.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
-    private CustomerService customerService;
+    private final CustomerService customerService;
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }

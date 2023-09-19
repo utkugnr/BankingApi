@@ -1,6 +1,6 @@
-package com.example.demo.response;
+package com.example.demo.dto.response;
 
-import com.example.demo.entity.Transaction;
+import com.example.demo.model.Transaction;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
