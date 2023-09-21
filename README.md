@@ -25,6 +25,9 @@ To get started with BankingApi , follow these steps:
   - Creating a new bank account with an initial deposit amount.
   - Conducting money transfers between accounts, even for different customers.
   - Checking the balance of a specific account.
+  - Customers can withdraw money from their accounts.
+  - Customers can deposit money into their accounts.
+  - Customers can apply for a loan with a certain interest rate.
   - Retrieving the transaction history for a particular account.
   - Implementing basic CRUD operations.
  
