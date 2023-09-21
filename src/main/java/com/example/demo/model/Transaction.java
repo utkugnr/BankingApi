@@ -26,12 +26,11 @@ public class Transaction {
    private LocalDateTime transactionTime;
 
    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-   @JoinColumn(name = "sender_account_id",nullable = false)
+   @JoinColumn(name = "sender_account_id")
    Account senderAccount;
 
    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-   @JoinColumn(name = "receiver_account_id",nullable = false)
+   @JoinColumn(name = "receiver_account_id")
    Account receiverAccount;
-
 
 }

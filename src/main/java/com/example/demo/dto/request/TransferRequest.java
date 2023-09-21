@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionCreateRequest {
+public class TransferRequest {
     BigDecimal transferAmount;
     String transactionType;
     LocalDateTime transactionTime;

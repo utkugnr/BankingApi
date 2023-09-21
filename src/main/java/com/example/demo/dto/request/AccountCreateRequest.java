@@ -15,4 +15,5 @@ public class AccountCreateRequest {
     BigDecimal accountBalance;
     LocalDate creationDate;
     Long customerId;
+   private BigDecimal accountDebt = new BigDecimal(0);
 }

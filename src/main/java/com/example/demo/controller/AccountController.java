@@ -7,8 +7,6 @@ import com.example.demo.dto.response.AccountResponse;
 import com.example.demo.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.InsufficientResourcesException;
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -41,13 +39,5 @@ public class AccountController {
     @DeleteMapping("/{accountId}")
     public void deleteOneAccount(@PathVariable Long accountId){
         accountService.delete(accountId);
-    }
-    @PutMapping("/{accountId}/withdraw")
-    public void withdrawMoney(@PathVariable Long accountId, @RequestParam BigDecimal transferAmount) throws InsufficientResourcesException {
-        accountService.withdraw(accountId,transferAmount);
-    }
-    @PutMapping("{accountId}/deposit")
-    public void depositMoney(@PathVariable Long accountId , @RequestParam BigDecimal transferAmount){
-        accountService.deposit(accountId,transferAmount);
     }
 }

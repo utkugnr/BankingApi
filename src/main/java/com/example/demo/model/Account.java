@@ -23,6 +23,8 @@ public class Account {
     private String accountType;
     @Column(name = "account_balance")
     private BigDecimal accountBalance;
+    @Column(name = "account_debt")
+    private BigDecimal accountDebt;
     @Column(name = "creation_date")
     private LocalDate creationDate;
 

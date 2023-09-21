@@ -10,14 +10,14 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionResponse {
+public class TransferResponse {
     Long id;
     BigDecimal transferAmount;
     String transactionType;
     Long senderAccountId;
     Long receiverAccountId;
 
-    public TransactionResponse(Transaction entity){
+    public TransferResponse(Transaction entity){
         this.id=entity.getId();
         this.transferAmount=entity.getTransferAmount();
         this.transactionType=entity.getTransactionType();
