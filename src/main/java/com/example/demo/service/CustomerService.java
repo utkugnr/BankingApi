@@ -19,6 +19,7 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
     public Customer create(CustomerCreateRequest newCustomerRequest) {
+
         if (Objects.isNull(newCustomerRequest))
             return null;
         else{

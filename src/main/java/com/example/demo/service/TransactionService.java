@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.InsufficientBalanceException;
 import com.example.demo.model.Account;
 import com.example.demo.model.Transaction;
 import com.example.demo.repository.AccountRepository;
@@ -27,11 +28,11 @@ public class TransactionService {
         this.accountRepository = accountRepository;
     }
     @Transactional
-    public Transaction transferMoney(TransferRequest newTransferRequest) throws InsufficientResourcesException {
+    public Transaction transferMoney(TransferRequest newTransferRequest) throws InsufficientResourcesException, InsufficientBalanceException {
         Account senderAccount = accountService.getOneAccount(newTransferRequest.getSenderAccountId());
         Account receiverAccount = accountService.getOneAccount(newTransferRequest.getReceiverAccountId());
         if(senderAccount.getAccountBalance().compareTo(newTransferRequest.getTransferAmount())<0)
-            throw new InsufficientResourcesException("Insufficient balance");
+            throw new InsufficientBalanceException("Insufficient funds to withdraw $");
         else{
             Transaction toSave = new Transaction();
             toSave.setTransferAmount(newTransferRequest.getTransferAmount());

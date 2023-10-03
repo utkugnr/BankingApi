@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.exception.InsufficientBalanceException;
 import com.example.demo.model.Transaction;
 import com.example.demo.dto.request.TransferRequest;
 import com.example.demo.dto.response.TransferResponse;
@@ -18,7 +19,7 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
     @PostMapping("/transfer")
-    public Transaction transferMoney(@RequestBody TransferRequest newTransferRequest) throws InsufficientResourcesException {
+    public Transaction transferMoney(@RequestBody TransferRequest newTransferRequest) throws InsufficientResourcesException, InsufficientBalanceException {
         return transactionService.transferMoney(newTransferRequest);
     }
     @PostMapping("{accountId}/withdraw")
