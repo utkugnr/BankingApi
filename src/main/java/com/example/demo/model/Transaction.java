@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,11 +27,12 @@ public class Transaction {
    private LocalDateTime transactionTime;
 
    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-   @JoinColumn(name = "sender_account_id")
+   @JoinColumn(name = "sender_account_id",nullable = true)
    Account senderAccount;
 
+
    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-   @JoinColumn(name = "receiver_account_id")
+   @JoinColumn(name = "receiver_account_id",nullable = true)
    Account receiverAccount;
 
 }

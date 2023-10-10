@@ -1,5 +1,6 @@
 package com.example.demo.dto.request;
 
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
