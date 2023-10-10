@@ -8,10 +8,11 @@ import com.example.demo.repository.TransactionRepository;
 import com.example.demo.dto.request.TransferRequest;
 import com.example.demo.dto.response.TransferResponse;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import javax.naming.InsufficientResourcesException;
-import javax.transaction.Transactional;
+
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,13 +69,19 @@ public class TransactionService {
     public void takeLoan(Long accountId , BigDecimal transferAmount){
         Account account = accountService.getOneAccount(accountId);
         BigDecimal currentBalance = account.getAccountBalance();
-        BigDecimal currentDebt = account.getAccountDebt();
+        BigDecimal currentDebt = BigDecimal.valueOf(1000);
         BigDecimal interestRate = new BigDecimal("1.5");
 
         BigDecimal newBalance = currentBalance.add(transferAmount);
         BigDecimal newDebt = currentDebt.add(transferAmount.multiply(interestRate));
         account.setAccountBalance(newBalance);
         account.setAccountDebt(newDebt);
+
+        Transaction toSave = new Transaction();
+        toSave.setTransferAmount(transferAmount);
+        toSave.setTransactionTime(LocalDateTime.now());
+        toSave.setReceiverAccount(account);
+        toSave = transactionRepository.save(toSave);
 
         accountRepository.save(account);
     }
